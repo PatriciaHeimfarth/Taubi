@@ -6,28 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <TableLayout
-            android:id="@+id/tableLayout1"
+            android:id="@+id/taubenTable"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:padding="10dip"
             android:isScrollContainer="true">
-
             <TableRow
-                android:id="@+id/tableRow1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
                 <TextView
                     android:text="Entfernung 4km"
                     android:padding="3dip" />
-                
-
             </TableRow>
         </TableLayout>
-
-
+    </ScrollView>
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
