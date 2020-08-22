@@ -12,6 +12,10 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +34,16 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        for (int i = 1; i < 111; i++){
+            TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
+            TableRow tr = new TableRow(this);
+            Button b = new Button(this);
+            b.setText("Entfernung 3km");
+            tr.addView(b);
+            tl.addView(tr);
+        }
+
     }
 
     @Override
