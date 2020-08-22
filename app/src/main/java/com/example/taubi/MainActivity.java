@@ -1,5 +1,6 @@
 package com.example.taubi;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,9 +39,12 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 1; i < 111; i++){
             TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
             TableRow tr = new TableRow(this);
+            tr.setBackgroundColor(Color.BLACK);
+            tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
             Button b = new Button(this);
             b.setText("Entfernung 3km");
             tr.addView(b);
+            b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
             tl.addView(tr);
         }
 
