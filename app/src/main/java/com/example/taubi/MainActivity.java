@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             TableRow tr = new TableRow(this);
             tr.setBackgroundColor(Color.BLACK);
             tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
-            Button b = new Button(this);
+            TaubenButton b = new TaubenButton(this);
             b.setText("Entfernung 3km");
             tr.addView(b);
             b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
