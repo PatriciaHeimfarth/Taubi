@@ -1,4 +1,4 @@
-package com.example.taubi;
+package com.pheimfarth.taubi;
 
 public class Taube {
     private String address;

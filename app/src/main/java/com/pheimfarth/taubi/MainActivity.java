@@ -1,4 +1,4 @@
-package com.example.taubi;
+package com.pheimfarth.taubi;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -25,7 +25,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
