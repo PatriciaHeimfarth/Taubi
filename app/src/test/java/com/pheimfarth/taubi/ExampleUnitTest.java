@@ -1,4 +1,4 @@
-package com.example.taubi;
+package com.pheimfarth.taubi;
 
 import org.junit.Test;
 
