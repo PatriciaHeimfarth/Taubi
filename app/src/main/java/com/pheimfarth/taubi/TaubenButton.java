@@ -2,6 +2,8 @@ package com.pheimfarth.taubi;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,7 +22,7 @@ public class TaubenButton extends androidx.appcompat.widget.AppCompatButton impl
 
     @Override
     public void onClick(View v) {
-        AlertDialog alertDialog = new Builder(getContext()).create();
+        /*AlertDialog alertDialog = new Builder(getContext()).create();
         alertDialog.setTitle("Taube gefunden");
         alertDialog.setButton(BUTTON_POSITIVE, "button", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -28,12 +30,15 @@ public class TaubenButton extends androidx.appcompat.widget.AppCompatButton impl
             }
         });
         alertDialog.setMessage("Gefunden");
-        alertDialog.show();
-
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("test");
-
-        myRef.setValue("Hello, World!");
+        alertDialog.show();*/
+        openLocationInGoogleMaps("1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA United States");
     }
+
+    private void openLocationInGoogleMaps(String address){
+        String map = "http://maps.google.co.in/maps?q=" + address;
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
+        getContext().startActivity(i);
+    }
+
+
 }

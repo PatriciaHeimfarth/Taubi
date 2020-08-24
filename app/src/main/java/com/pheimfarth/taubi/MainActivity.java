@@ -12,6 +12,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +35,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
+    FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        database = FirebaseDatabase.getInstance();
 
 
         for (int i = 1; i < 111; i++) {
@@ -84,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         // Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         // startActivity(intent);
         getLocation();
-
     }
 
     private void getLocation() {
@@ -104,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("Location", String.valueOf(addresses.get(0).getLatitude() + "  " + addresses.get(0).getLongitude()));
                         Taube taube = new Taube(String.valueOf(addresses.get(0).getAddressLine(0) + " " + addresses.get(0).getCountryName()), "hi");
                         Log.i("Address", taube.getAddress());
+                        DatabaseReference myRef = database.getReference("taube2");
+                        myRef.setValue(taube.getAddress());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
