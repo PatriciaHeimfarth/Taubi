@@ -30,10 +30,7 @@ public class TaubenButton extends androidx.appcompat.widget.AppCompatButton impl
         alertDialog.setMessage("Gefunden");
         alertDialog.show();
 
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("test");
-
-        myRef.setValue("Hello, World!");
     }
+
+
 }
