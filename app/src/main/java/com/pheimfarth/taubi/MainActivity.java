@@ -1,6 +1,7 @@
 package com.pheimfarth.taubi;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -47,29 +48,32 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         database = FirebaseDatabase.getInstance();
-
-
-        TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
-        TableRow tr = new TableRow(this);
-        tr.setBackgroundColor(Color.BLACK);
-        tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
-        final TaubenButton b = new TaubenButton(this);
+        final TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
         DatabaseReference myDbRef = database.getReference("Tauben");
 
         myDbRef.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.child("Taube").child("1").getValue().toString();
-                b.setText(value);
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String value = child.getValue().toString();
+                    TableRow tr = new TableRow(getBaseContext());
+                   // tr.setBackgroundColor(Color.BLACK);
+                  //  tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
+                    Context c = MainActivity.this;
+                    TaubenButton b = new TaubenButton(c);
+                    b.setText(value);
+                    tr.addView(b);
+                    b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+                    tl.addView(tr);
+                }
             }
             @Override
             public void onCancelled(DatabaseError error) {
                 Log.w("TAG", "Failed to read value.", error.toException());
             }
         });
-        tr.addView(b);
-        b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
-        tl.addView(tr);
+
 
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
