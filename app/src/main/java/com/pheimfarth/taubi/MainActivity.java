@@ -12,8 +12,11 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,13 +49,24 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
 
-        for (int i = 1; i < 111; i++) {
+        for (int i = 1; i < 3; i++) {
             TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
             TableRow tr = new TableRow(this);
             tr.setBackgroundColor(Color.BLACK);
             tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
-            TaubenButton b = new TaubenButton(this);
-            b.setText("Entfernung 3km");
+            final TaubenButton b = new TaubenButton(this);
+            DatabaseReference myDbRef = database.getReference("taube2");
+            myDbRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String value = dataSnapshot.getValue(String.class);
+                    b.setText(value);
+                }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    Log.w("TAG", "Failed to read value.", error.toException());
+                }
+            });
             tr.addView(b);
             b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
             tl.addView(tr);
