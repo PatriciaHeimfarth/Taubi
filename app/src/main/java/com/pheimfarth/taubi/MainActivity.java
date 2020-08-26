@@ -1,6 +1,7 @@
 package com.pheimfarth.taubi;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -12,8 +13,11 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,21 +48,35 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         database = FirebaseDatabase.getInstance();
-
-
-        for (int i = 1; i < 111; i++) {
-            TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
-            TableRow tr = new TableRow(this);
-            tr.setBackgroundColor(Color.BLACK);
-            tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
-            TaubenButton b = new TaubenButton(this);
-            b.setText("Entfernung 3km");
-            tr.addView(b);
-            b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
-            tl.addView(tr);
-        }
-
+        final TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
+        DatabaseReference myDbRef = database.getReference("Tauben");
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        myDbRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String value = child.getValue().toString();
+                    TableRow tr = new TableRow(getBaseContext());
+                   // tr.setBackgroundColor(Color.BLACK);
+                  //  tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
+                    Context c = MainActivity.this;
+                    TaubenButton b = new TaubenButton(c);
+                    b.setText(value);
+                    tr.addView(b);
+                    b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+                    tl.addView(tr);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
+
+
+
 
     }
 

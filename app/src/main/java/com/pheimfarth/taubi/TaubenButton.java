@@ -22,16 +22,8 @@ public class TaubenButton extends androidx.appcompat.widget.AppCompatButton impl
 
     @Override
     public void onClick(View v) {
-        /*AlertDialog alertDialog = new Builder(getContext()).create();
-        alertDialog.setTitle("Taube gefunden");
-        alertDialog.setButton(BUTTON_POSITIVE, "button", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Toast.makeText(getContext(), "positive button", Toast.LENGTH_SHORT).show();
-            }
-        });
-        alertDialog.setMessage("Gefunden");
-        alertDialog.show();*/
-        openLocationInGoogleMaps("1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA United States");
+
+        openLocationInGoogleMaps(this.getText().toString());
     }
 
     private void openLocationInGoogleMaps(String address){
