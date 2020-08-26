@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         final TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
         DatabaseReference myDbRef = database.getReference("Tauben");
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         myDbRef.addValueEventListener(new ValueEventListener() {
 
@@ -76,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
     }
 
