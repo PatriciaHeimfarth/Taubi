@@ -49,28 +49,28 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
 
-        for (int i = 1; i < 3; i++) {
-            TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
-            TableRow tr = new TableRow(this);
-            tr.setBackgroundColor(Color.BLACK);
-            tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
-            final TaubenButton b = new TaubenButton(this);
-            DatabaseReference myDbRef = database.getReference("taube2");
-            myDbRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String value = dataSnapshot.getValue(String.class);
-                    b.setText(value);
-                }
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    Log.w("TAG", "Failed to read value.", error.toException());
-                }
-            });
-            tr.addView(b);
-            b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
-            tl.addView(tr);
-        }
+        TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
+        TableRow tr = new TableRow(this);
+        tr.setBackgroundColor(Color.BLACK);
+        tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
+        final TaubenButton b = new TaubenButton(this);
+        DatabaseReference myDbRef = database.getReference("Tauben");
+
+        myDbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.child("Taube").child("1").getValue().toString();
+                b.setText(value);
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
+        tr.addView(b);
+        b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+        tl.addView(tr);
+
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
