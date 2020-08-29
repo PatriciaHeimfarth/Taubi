@@ -3,7 +3,6 @@ package com.pheimfarth.taubi;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -63,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
                   //  tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
                     Context c = MainActivity.this;
                     TaubenButton b = new TaubenButton(c);
-                    b.setText(value);
+                    b.setTaube(new Taube(value.split("-----")[0], value.split("-----")[1]) );
+                    b.setText(b.getTaube().distanceBetweenTaubenAddressAndCurrentLocation(getLocation()));
                     tr.addView(b);
                     b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
                     tl.addView(tr);
@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
         getLocation();
     }
 
-    private void getLocation() {
-
+    private double[] getLocation() {
+        final double [] locationArray = new double[2];
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
@@ -117,22 +117,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
                 Location location = task.getResult();
+
                 if (location != null) {
                     try {
                         Geocoder geocoder = new Geocoder(MainActivity.this,
                                 Locale.getDefault());
                         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                         Log.i("Location", String.valueOf(addresses.get(0).getLatitude() + "  " + addresses.get(0).getLongitude()));
-                        Taube taube = new Taube(String.valueOf(addresses.get(0).getAddressLine(0) + " " + addresses.get(0).getCountryName()), "hi");
-                        Log.i("Address", taube.getAddress());
+                        Taube taube = new Taube(String.valueOf(addresses.get(0).getLatitude()), String.valueOf(addresses.get(0).getLongitude()));
                         DatabaseReference myRef = database.getReference("taube2");
-                        myRef.setValue(taube.getAddress());
+                        myRef.setValue(taube.getLatitude() + "----" + taube.getLongitude());
+
+                        locationArray[0] = addresses.get(0).getLatitude();
+                        locationArray[1] = addresses.get(0).getLongitude();
+
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                 }
+
+
+
             }
-        });
+        }
+
+        );
+        return locationArray;
     }
 }
