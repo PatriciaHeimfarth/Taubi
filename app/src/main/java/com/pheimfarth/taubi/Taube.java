@@ -20,17 +20,17 @@ public class Taube {
         return longitude;
     }
 
-    public String distanceBetweenTaubenAddressAndCurrentLocation(double [] usersAddress) {
+    public String distanceBetweenTaubenAddressAndCurrentLocation(double usersLat, double usersLon) {
         Location taubeLocation = new Location("");
         Location usersLocation = new Location("");
 
         taubeLocation.setLatitude(Double.valueOf(latitude));
         taubeLocation.setLongitude(Double.valueOf(longitude));
 
-        usersLocation.setLatitude(usersAddress[0]);
-        usersLocation.setLongitude(usersAddress[1]);
+        usersLocation.setLatitude(usersLat);
+        usersLocation.setLongitude(usersLon);
 
         float distance = taubeLocation.distanceTo(usersLocation);
-        return String.valueOf(distance);
+        return String.valueOf(distance / 1000);
     }
 }
