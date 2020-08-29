@@ -30,7 +30,7 @@ public class TaubenButton extends androidx.appcompat.widget.AppCompatButton impl
     }
 
     private void openLocationInGoogleMaps(String address){
-        String map = "http://maps.google.co.in/maps?q=" + address;
+        String map = "http://maps.google.co.in/maps?q=" + taube.getLatitude() + "," + taube.getLongitude();
         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
         getContext().startActivity(i);
     }
