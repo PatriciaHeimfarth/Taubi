@@ -1,9 +1,14 @@
 package com.pheimfarth.taubi;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
+
+import androidx.appcompat.app.AlertDialog;
 
 
 public class TaubenButton extends androidx.appcompat.widget.AppCompatButton implements View.OnClickListener {
@@ -26,7 +31,32 @@ public class TaubenButton extends androidx.appcompat.widget.AppCompatButton impl
     @Override
     public void onClick(View v) {
 
-        openLocationInGoogleMaps(this.getText().toString());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Enter Text");
+
+
+        final EditText input = new EditText(getContext());
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // input.getText().toString();
+                openLocationInGoogleMaps(getText().toString());
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
     }
 
     private void openLocationInGoogleMaps(String address){
