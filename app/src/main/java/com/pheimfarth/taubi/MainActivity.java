@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
                     tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
                     Context c = MainActivity.this;
                     TaubenButton b = new TaubenButton(c);
-                    b.setTaube(new Taube(value.split("----")[0], value.split("----")[1]));
-                    b.setText(b.getTaube().distanceBetweenTaubenAddressAndCurrentLocation(user.getLatitude(), user.getLongitude()));
-                    tr.addView(b);
-                    b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+                  //  b.setTaube(new Taube(value.split("----")[0], value.split("----")[1]));
+                 //   b.setText(b.getTaube().distanceBetweenTaubenAddressAndCurrentLocation(user.getLatitude(), user.getLongitude()));
+                //    tr.addView(b);
+                 //   b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
                     tl.addView(tr);
                 }
             }
@@ -165,10 +165,19 @@ public class MainActivity extends AppCompatActivity {
                                                               Log.i("Location", String.valueOf(addresses.get(0).getLatitude() + "  " + addresses.get(0).getLongitude()));
                                                               Taube taube = new Taube(String.valueOf(addresses.get(0).getLatitude()), String.valueOf(addresses.get(0).getLongitude()));
 
-                                                              DatabaseReference myRef = database.getReference("Tauben");
-                                                              HashMap test = new HashMap();
-                                                              test.put(String.valueOf(new Date().getTime()), taube.getLatitude() + "----" + taube.getLongitude());
-                                                              myRef.updateChildren(test);
+                                                              DatabaseReference myRef = database.getReference("Tauben/" + new Date().getTime());
+                                                              HashMap lat = new HashMap();
+                                                              lat.put("Latitude", taube.getLatitude());
+                                                              myRef.updateChildren(lat);
+
+                                                              HashMap lon = new HashMap();
+                                                              lon.put("Longitude", taube.getLongitude());
+                                                              myRef.updateChildren(lon);
+
+                                                              HashMap helper = new HashMap();
+                                                              helper.put("Helper", false);
+                                                              myRef.updateChildren(helper);
+
 
                                                           } catch (IOException e) {
                                                               e.printStackTrace();
