@@ -33,8 +33,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                      tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
                     Context c = MainActivity.this;
                     TaubenButton b = new TaubenButton(c);
-                    b.setTaube(new Taube(value.split("-----")[0], value.split("-----")[1]) );
+                   b.setTaube(new Taube(value.split("----")[0], value.split("----")[1]) );
 
                     b.setText(b.getTaube().distanceBetweenTaubenAddressAndCurrentLocation(user.getLatitude(), user.getLongitude()));
                     tr.addView(b);
@@ -130,14 +133,14 @@ public class MainActivity extends AppCompatActivity {
                                 Locale.getDefault());
                         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                         Log.i("Location", String.valueOf(addresses.get(0).getLatitude() + "  " + addresses.get(0).getLongitude()));
-                      //  Taube taube = new Taube(String.valueOf(addresses.get(0).getLatitude()), String.valueOf(addresses.get(0).getLongitude()));
+                        Taube taube = new Taube(String.valueOf(addresses.get(0).getLatitude()), String.valueOf(addresses.get(0).getLongitude()));
 
-                      //  DatabaseReference myRef = database.getReference("taube2");
-                      //  myRef.setValue(taube.getLatitude() + "----" + taube.getLongitude());
-
+                       DatabaseReference myRef = database.getReference("Tauben");
+                        HashMap test = new HashMap ();
+                        test.put(String.valueOf(new Date().getTime()), taube.getLatitude() + "----" + taube.getLongitude());
+                        myRef.updateChildren(test);
                         user.setLatitude(addresses.get(0).getLatitude());
                         user.setLongitude(addresses.get(0).getLongitude());
-
 
                     } catch (IOException e) {
                         e.printStackTrace();
