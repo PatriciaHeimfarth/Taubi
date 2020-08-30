@@ -33,8 +33,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -130,10 +132,13 @@ public class MainActivity extends AppCompatActivity {
                                 Locale.getDefault());
                         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                         Log.i("Location", String.valueOf(addresses.get(0).getLatitude() + "  " + addresses.get(0).getLongitude()));
-                      //  Taube taube = new Taube(String.valueOf(addresses.get(0).getLatitude()), String.valueOf(addresses.get(0).getLongitude()));
+                        Taube taube = new Taube(String.valueOf(addresses.get(0).getLatitude()), String.valueOf(addresses.get(0).getLongitude()));
 
-                      //  DatabaseReference myRef = database.getReference("taube2");
-                      //  myRef.setValue(taube.getLatitude() + "----" + taube.getLongitude());
+                       DatabaseReference myRef = database.getReference("Tauben");
+                        HashMap test = new HashMap ();
+                        test.put("554", "test");
+                        myRef.updateChildren(test);
+                       // myRef.setValue(taube.getLatitude() + "----" + taube.getLongitude());
 
                         user.setLatitude(addresses.get(0).getLatitude());
                         user.setLongitude(addresses.get(0).getLongitude());
