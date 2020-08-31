@@ -6,10 +6,14 @@ public class Taube {
 
     private String latitude;
     private String longitude;
+    private String id;
+    private boolean helper;
 
-    public Taube(  String latitude, String longitude) {
+    public Taube(String id, String latitude, String longitude) {
+        this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.helper = false;
     }
 
     public String getLatitude() {
@@ -32,5 +36,13 @@ public class Taube {
 
         float distance = taubeLocation.distanceTo(usersLocation);
         return String.valueOf(distance / 1000) + " km entfernt";
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public boolean getHelper() {
+        return this.helper;
     }
 }

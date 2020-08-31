@@ -10,8 +10,16 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class TaubenButton extends androidx.appcompat.widget.AppCompatButton implements View.OnClickListener {
+
+    FirebaseDatabase database;
 
     public Taube getTaube() {
         return taube;
@@ -43,8 +51,13 @@ public class TaubenButton extends androidx.appcompat.widget.AppCompatButton impl
         builder.setPositiveButton("Übernehme ich", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // input.getText().toString();
+                database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Tauben/" + taube.getId());
 
+                Map<String, Object> helperUpdate = new HashMap<>();
+                helperUpdate.put("Helper", "true");
+
+                myRef.updateChildren(helperUpdate);
             }
         });
 
