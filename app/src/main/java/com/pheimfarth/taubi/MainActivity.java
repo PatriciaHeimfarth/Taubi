@@ -33,6 +33,7 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -75,10 +76,17 @@ public class MainActivity extends AppCompatActivity {
                     tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
                     Context c = MainActivity.this;
                     TaubenButton b = new TaubenButton(c);
-                    b.setTaube(new Taube(child.getKey(), Iterables.get(child.getChildren(), 1).getValue().toString(), Iterables.get(child.getChildren(), 2).getValue().toString()));
+                    b.setTaube(new Taube(child.getKey(), Iterables.get(child.getChildren(), 1).getValue().toString(),
+                            Iterables.get(child.getChildren(), 2).getValue().toString(),
+                            Boolean.valueOf(Iterables.get(child.getChildren(), 0).getValue().toString())));
                     b.setText(b.getTaube().distanceBetweenTaubenAddressAndCurrentLocation(user.getLatitude(), user.getLongitude()));
                     tr.addView(b);
                     b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+
+                    if(b.getTaube().getHelper()){
+                       b.setText("Wird übernommen!");
+                    }
+
                     tl.addView(tr);
                 }
             }
@@ -163,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                                                                       Locale.getDefault());
                                                               List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                                               Log.i("Location", String.valueOf(addresses.get(0).getLatitude() + "  " + addresses.get(0).getLongitude()));
-                                                              Taube taube = new Taube(String.valueOf(new Date().getTime()), String.valueOf(addresses.get(0).getLatitude()), String.valueOf(addresses.get(0).getLongitude()));
+                                                              Taube taube = new Taube(String.valueOf(new Date().getTime()), String.valueOf(addresses.get(0).getLatitude()), String.valueOf(addresses.get(0).getLongitude()), false);
 
                                                               DatabaseReference myRef = database.getReference("Tauben/" + taube.getId());
                                                               HashMap map = new HashMap();

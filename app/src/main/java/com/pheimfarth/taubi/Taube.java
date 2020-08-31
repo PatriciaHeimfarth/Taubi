@@ -9,11 +9,11 @@ public class Taube {
     private String id;
     private boolean helper;
 
-    public Taube(String id, String latitude, String longitude) {
+    public Taube(String id, String latitude, String longitude, boolean helper) {
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.helper = false;
+        this.helper = helper;
     }
 
     public String getLatitude() {
