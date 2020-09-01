@@ -40,26 +40,27 @@ public class TaubenButton extends androidx.appcompat.widget.AppCompatButton impl
     public void onClick(View v) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Enter Text");
 
+        if (taube.getHelper()){
+            builder.setTitle("Wird übernommen");
+        }
+        else{
+            builder.setTitle("Taube übernehmen");
+            builder.setPositiveButton("Übernehme ich", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("Tauben/" + taube.getId());
 
-        final EditText input = new EditText(getContext());
+                    Map<String, Object> helperUpdate = new HashMap<>();
+                    helperUpdate.put("Helper", "true");
 
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
-        builder.setView(input);
+                    myRef.updateChildren(helperUpdate);
+                }
+            });
 
-        builder.setPositiveButton("Übernehme ich", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("Tauben/" + taube.getId());
+        }
 
-                Map<String, Object> helperUpdate = new HashMap<>();
-                helperUpdate.put("Helper", "true");
-
-                myRef.updateChildren(helperUpdate);
-            }
-        });
 
         builder.setNeutralButton("Auf Google Maps anzeigen", new DialogInterface.OnClickListener() {
             @Override

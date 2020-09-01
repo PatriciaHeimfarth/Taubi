@@ -39,6 +39,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -69,16 +72,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<Taube> taubenSorted = sortTauben(dataSnapshot);
+
                 tl.removeAllViews();
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                for (Taube taube : taubenSorted) {
                     TableRow tr = new TableRow(getBaseContext());
                     tr.setBackgroundColor(Color.BLACK);
                     tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
                     Context c = MainActivity.this;
                     TaubenButton b = new TaubenButton(c);
-                    b.setTaube(new Taube(child.getKey(), Iterables.get(child.getChildren(), 1).getValue().toString(),
-                            Iterables.get(child.getChildren(), 2).getValue().toString(),
-                            Boolean.valueOf(Iterables.get(child.getChildren(), 0).getValue().toString())));
+                    b.setTaube(taube);
                     b.setText(b.getTaube().distanceBetweenTaubenAddressAndCurrentLocation(user.getLatitude(), user.getLongitude()));
                     tr.addView(b);
                     b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
@@ -137,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter Text");
+        builder.setTitle("Taube befindet sich an meinem Standort");
 
 
         final EditText input = new EditText(this);
@@ -189,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
                         );
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -198,6 +202,27 @@ public class MainActivity extends AppCompatActivity {
 
         builder.show();
 
+    }
+
+    private List<Taube> sortTauben(DataSnapshot tauben){
+
+        ArrayList<Taube> taubenList = new ArrayList();
+        for (DataSnapshot taube : tauben.getChildren()) {
+
+            taubenList.add(new Taube(taube.getKey(), Iterables.get(taube.getChildren(), 1).getValue().toString(),
+                    Iterables.get(taube.getChildren(), 2).getValue().toString(),
+                    Boolean.valueOf(Iterables.get(taube.getChildren(), 0).getValue().toString())));
+        }
+
+        Collections.sort(taubenList, new Comparator<Taube>() {
+            @Override
+            public int compare(Taube o1, Taube o2) {
+                return o1.distanceBetweenTaubenAddressAndCurrentLocation(user.getLatitude(), user.getLongitude()).
+                        compareTo(o2.distanceBetweenTaubenAddressAndCurrentLocation(user.getLatitude(), user.getLongitude()));
+            }
+        });
+
+        return taubenList;
     }
 
     private void getLocation() {
