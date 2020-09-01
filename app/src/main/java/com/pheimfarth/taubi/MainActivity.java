@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         database = FirebaseDatabase.getInstance();
         user = new User();
         final TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);

@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.text.InputType;
 import android.view.View;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -17,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class TaubenButton extends androidx.appcompat.widget.AppCompatButton implements View.OnClickListener {
+public class TaubenButton extends com.google.android.material.button.MaterialButton implements View.OnClickListener {
 
     FirebaseDatabase database;
 
