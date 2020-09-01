@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter Text");
+        builder.setTitle("Taube befindet sich an meinem Standort");
 
 
         final EditText input = new EditText(this);
