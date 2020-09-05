@@ -8,12 +8,14 @@ public class Taube {
     private String longitude;
     private String id;
     private boolean helper;
+    private String description;
 
-    public Taube(String id, String latitude, String longitude, boolean helper) {
+    public Taube(String id, String latitude, String longitude, boolean helper, String description) {
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
         this.helper = helper;
+        this.description = description;
     }
 
     public String getLatitude() {
@@ -44,5 +46,9 @@ public class Taube {
 
     public boolean getHelper() {
         return this.helper;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 }
