@@ -37,7 +37,7 @@ public class Taube {
         usersLocation.setLongitude(usersLon);
 
         float distance = taubeLocation.distanceTo(usersLocation);
-        return String.valueOf(distance / 1000) + " km entfernt";
+        return (int)(distance / 1000) + " km entfernt";
     }
 
     public String getId() {
