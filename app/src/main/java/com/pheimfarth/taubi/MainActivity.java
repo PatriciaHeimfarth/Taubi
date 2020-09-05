@@ -139,12 +139,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Taube befindet sich an meinem Standort");
+        builder.setTitle("Taube hinzufügen");
 
 
         final EditText input = new EditText(this);
-
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        input.setHint("Beschreibe die Taube und ihren Standort möglichst genau");
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         builder.setView(input);
         builder.setPositiveButton("Taube hinzufügen", new DialogInterface.OnClickListener() {
             @Override
