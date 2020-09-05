@@ -173,13 +173,15 @@ public class MainActivity extends AppCompatActivity {
                                                                       Locale.getDefault());
                                                               List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                                               Log.i("Location", String.valueOf(addresses.get(0).getLatitude() + "  " + addresses.get(0).getLongitude()));
-                                                              Taube taube = new Taube(String.valueOf(new Date().getTime()), String.valueOf(addresses.get(0).getLatitude()), String.valueOf(addresses.get(0).getLongitude()), false);
+                                                              Taube taube = new Taube(String.valueOf(new Date().getTime()), String.valueOf(addresses.get(0).getLatitude()), String.valueOf(addresses.get(0).getLongitude()), false, input.getText().toString());
 
                                                               DatabaseReference myRef = database.getReference("Tauben/" + taube.getId());
                                                               HashMap map = new HashMap();
+                                                              map.put("Description", taube.getDescription());
                                                               map.put("Latitude", taube.getLatitude());
                                                               map.put("Longitude", taube.getLongitude());
                                                               map.put("Helper", taube.getHelper());
+
                                                               myRef.updateChildren(map);
 
                                                           } catch (IOException e) {
@@ -207,9 +209,9 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Taube> taubenList = new ArrayList();
         for (DataSnapshot taube : tauben.getChildren()) {
 
-            taubenList.add(new Taube(taube.getKey(), Iterables.get(taube.getChildren(), 1).getValue().toString(),
-                    Iterables.get(taube.getChildren(), 2).getValue().toString(),
-                    Boolean.valueOf(Iterables.get(taube.getChildren(), 0).getValue().toString())));
+            taubenList.add(new Taube(taube.getKey(), Iterables.get(taube.getChildren(), 2).getValue().toString(),
+                    Iterables.get(taube.getChildren(), 3).getValue().toString(),
+                    Boolean.valueOf(Iterables.get(taube.getChildren(), 1).getValue().toString()), Iterables.get(taube.getChildren(), 0).getValue().toString()));
         }
 
         Collections.sort(taubenList, new Comparator<Taube>() {
