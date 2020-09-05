@@ -14,6 +14,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.common.collect.Iterables;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Taube hinzufügen");
 
 
-        final EditText input = new EditText(this);
+        final EditText input = new MaterialAutoCompleteTextView(this);
         input.setHint("Beschreibe die Taube und ihren Standort möglichst genau");
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         builder.setView(input);

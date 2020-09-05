@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -39,11 +40,19 @@ public class TaubenButton extends com.google.android.material.button.MaterialBut
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
+        TextView description = new TextView(getContext());
+        description.setText(taube.getDescription());
+
+
+
         if (taube.getHelper()){
             builder.setTitle("Wird übernommen");
         }
         else{
             builder.setTitle("Taube übernehmen");
+            builder.setView(new TextView(getContext()));
+            builder.setView(description);
+
             builder.setPositiveButton("Übernehme ich", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
