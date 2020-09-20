@@ -32,4 +32,25 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
     }
+
+    public void logIn(View view){
+        mAuth.signInWithEmailAndPassword("test@gmail.com", "password1!")
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                           // updateUI(user);
+                        } else {
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Login hat nicht funktioniert.",
+                                    Toast.LENGTH_SHORT).show();
+                          //  updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
+    }
 }
