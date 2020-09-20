@@ -60,7 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Hint Mail"
+                android:hint="E-Mail-Adresse"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -68,7 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Hint Password"
+                android:hint="Passwort"
                 android:inputType="textPassword" />
         </LinearLayout>
 
