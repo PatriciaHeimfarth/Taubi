@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,18 +20,21 @@ public class SignupActivity extends AppCompatActivity {
 
     private String TAG = "Signup Activity";
     private FirebaseAuth mAuth;
+    private EditText fieldEmail;
+    private EditText fieldPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
         mAuth = FirebaseAuth.getInstance();
 
+        fieldEmail = findViewById(R.id.fieldEmail);
+        fieldPassword = findViewById(R.id.fieldPassword);
     }
 
     public void signUpUser(View view){
-        mAuth.createUserWithEmailAndPassword("test@gmail.com", "password1!")
+        mAuth.createUserWithEmailAndPassword(fieldEmail.getText().toString(), fieldPassword.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
