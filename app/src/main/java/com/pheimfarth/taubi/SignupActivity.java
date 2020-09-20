@@ -37,19 +37,15 @@ public class SignupActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            // updateUI(user);
+                            goToLogin();
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignupActivity.this, "Registrierung so nicht möglich.",
                                     Toast.LENGTH_SHORT).show();
-                            //  updateUI(null);
                         }
-
-                        // ...
                     }
                 });
 
-        goToLogin();
     }
 
 
