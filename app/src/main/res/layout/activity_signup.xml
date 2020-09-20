@@ -3,7 +3,6 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
     android:weightSum="4">
 
@@ -47,7 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/colorPrimaryDark"
         android:gravity="center_vertical">
 
         <LinearLayout
@@ -95,12 +93,13 @@
 
             <Button
                 android:id="@+id/emailCreateAccountButton"
-                android:layout_marginStart="3dp"
-                android:layout_marginEnd="3dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
                 android:layout_weight="1"
-                android:text="create account" />
+                android:onClick="signUpUser"
+                android:text="Registrieren" />
         </LinearLayout>
 
         <LinearLayout
