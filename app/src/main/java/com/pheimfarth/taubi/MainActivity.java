@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.common.collect.Iterables;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,58 +54,66 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    FusedLocationProviderClient fusedLocationProviderClient;
-    FirebaseDatabase database;
-
-    User user;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private FirebaseDatabase database;
+    private FirebaseAuth mAuth;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        user = new User();
-        final TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
-        DatabaseReference myDbRef = database.getReference("Tauben");
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        getLocation();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        myDbRef.addValueEventListener(new ValueEventListener() {
+        if(currentUser != null){
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            user = new User();
 
-                List<Taube> taubenSorted = sortTauben(dataSnapshot);
+            final TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
+            DatabaseReference myDbRef = database.getReference("Tauben");
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            getLocation();
 
-                tl.removeAllViews();
-                for (Taube taube : taubenSorted) {
-                    TableRow tr = new TableRow(getBaseContext());
-                    tr.setBackgroundColor(Color.BLACK);
-                    tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
-                    Context c = MainActivity.this;
-                    TaubenButton b = new TaubenButton(c);
-                    b.setTaube(taube);
-                    b.setText(b.getTaube().distanceBetweenTaubenAddressAndCurrentLocation(user.getLatitude(), user.getLongitude()));
-                    tr.addView(b);
-                    b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+            myDbRef.addValueEventListener(new ValueEventListener() {
 
-                    if(b.getTaube().getHelper()){
-                       b.setText("Wird übernommen!");
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    List<Taube> taubenSorted = sortTauben(dataSnapshot);
+
+                    tl.removeAllViews();
+                    for (Taube taube : taubenSorted) {
+                        TableRow tr = new TableRow(getBaseContext());
+                        tr.setBackgroundColor(Color.BLACK);
+                        tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
+                        Context c = MainActivity.this;
+                        TaubenButton b = new TaubenButton(c);
+                        b.setTaube(taube);
+                        b.setText(b.getTaube().distanceBetweenTaubenAddressAndCurrentLocation(user.getLatitude(), user.getLongitude()));
+                        tr.addView(b);
+                        b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+
+                        if(b.getTaube().getHelper()){
+                            b.setText("Wird übernommen!");
+                        }
+
+                        tl.addView(tr);
                     }
-
-                    tl.addView(tr);
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w("TAG", "Failed to read value.", error.toException());
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    Log.w("TAG", "Failed to read value.", error.toException());
+                }
+            });
+        }
+        else{
 
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
