@@ -30,7 +30,7 @@
         <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
-            android:text="Ausgeloggt"
+            android:text="Du bist ausgeloggt"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -88,7 +88,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sign in" />
+                android:text="Einloggen" />
 
             <Button
                 android:id="@+id/emailCreateAccountButton"
@@ -118,7 +118,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sign out" />
+                android:text="Ausloggen" />
 
             <Button
                 android:id="@+id/verifyEmailButton"
@@ -127,7 +127,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="verify email" />
+                android:text="E-Mail bestätigen" />
 
             <Button
                 android:id="@+id/reloadButton"

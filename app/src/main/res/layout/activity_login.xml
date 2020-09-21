@@ -26,12 +26,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
-            android:text="Title Text"/>
+            android:text="Login"/>
 
         <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
-            android:text="Signed out"
+            android:text="Du bist ausgeloggt"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="goToSignIn"
-                android:text="create account" />
+                android:text="Registrieren" />
         </LinearLayout>
 
         <LinearLayout
@@ -120,7 +120,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sign out" />
+                android:text="Ausloggen" />
 
             <Button
                 android:id="@+id/verifyEmailButton"
@@ -129,7 +129,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="verify email" />
+                android:text="E-Mail bestätigen" />
 
             <Button
                 android:id="@+id/reloadButton"
