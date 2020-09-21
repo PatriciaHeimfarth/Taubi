@@ -34,22 +34,23 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void signUpUser(View view){
-        mAuth.createUserWithEmailAndPassword(fieldEmail.getText().toString(), fieldPassword.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            goToLogin();
-                        } else {
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignupActivity.this, "Registrierung so nicht möglich.",
-                                    Toast.LENGTH_SHORT).show();
+        if (!fieldEmail.getText().toString().trim().isEmpty() && !fieldPassword.getText().toString().trim().isEmpty()) {
+            mAuth.createUserWithEmailAndPassword(fieldEmail.getText().toString(), fieldPassword.getText().toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                goToLogin();
+                            } else {
+                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(SignupActivity.this, "Registrierung so nicht möglich.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-
+                    });
+        }
     }
 
 
