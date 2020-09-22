@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if(currentUser != null ){
+        if(currentUser != null && currentUser.isEmailVerified()){
             user = new User();
 
             final TableLayout tl = (TableLayout) findViewById(R.id.taubenTable);
