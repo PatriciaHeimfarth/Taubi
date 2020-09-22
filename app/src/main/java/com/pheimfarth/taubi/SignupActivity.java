@@ -43,6 +43,7 @@ public class SignupActivity extends AppCompatActivity {
                                 Log.d(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 goToLogin();
+                                user.sendEmailVerification();
                             } else {
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(SignupActivity.this, "Registrierung so nicht möglich.",
@@ -50,6 +51,7 @@ public class SignupActivity extends AppCompatActivity {
                             }
                         }
                     });
+
         }
     }
 
