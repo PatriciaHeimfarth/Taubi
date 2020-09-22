@@ -46,7 +46,7 @@ public class SignupActivity extends AppCompatActivity {
                                 user.sendEmailVerification();
                             } else {
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(SignupActivity.this, "Registrierung so nicht möglich.",
+                                Toast.makeText(SignupActivity.this, "Bitte wählen Sie ein sicheres Passwort.",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
